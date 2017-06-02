@@ -1,14 +1,21 @@
 {
   "name": "date-async-format-pipe",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:ngc": "rm -rf dist && npm run lint && npm run build:esm",
+    "build:esm": "ngc -p src/tsconfig.app.json",
+    "ngc": "ngc",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "lint": "ng lint"
   },
   "private": true,
   "peerDependencies": {

@@ -12,7 +12,7 @@ import { MomentInput } from 'moment';
   name: 'dateFormatAsync',
   pure: false
 })
-export class DateAsyncFormatPipePipe implements PipeTransform {
+export class DateAsyncFormatPipe implements PipeTransform {
   private cachedDateFormat: string = null;
   private cachedDateFormat$: Observable<string> = null;
   private cachedDateFormatSubscription: Subscription;

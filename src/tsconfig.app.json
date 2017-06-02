@@ -1,13 +1,18 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "module": "es2015",
-    "baseUrl": "",
-    "types": []
+    "outDir": "../dist",
+    "module": "es2015"
   },
   "exclude": [
-    "test.ts",
+    "node_modules",
     "**/*.spec.ts"
-  ]
+  ],
+  "files": [
+    "index.ts"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "codegen",
+    "skipTemplateCodegen": true
+  }
 }

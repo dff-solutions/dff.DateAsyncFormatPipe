@@ -1,15 +1,45 @@
-import { DateAsyncFormatPipePipe } from './date-async-format.pipe';
+import { Component, DebugElement, EventEmitter } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/of';
-
 import * as moment from 'moment';
 
+import { DateAsyncFormatPipe } from './date-async-format.pipe';
+import { DateAsyncFormatModule } from './date-async-format.module';
+
+@Component({
+  template: `<div>{{ date | dateFormatAsync : dateFormat$ }}</div> `
+})
+class TestComponent {
+  public date: Date;
+  public dateFormat$: Subject<string> = new Subject();
+}
+
 describe('DateAsyncFormatPipePipe', () => {
-  let pipe: DateAsyncFormatPipePipe;
+  let pipe: DateAsyncFormatPipe;
+  let fixture: ComponentFixture<TestComponent>;
+  let testComponent: TestComponent;
+  let de: DebugElement;
+  let ne: HTMLElement;
 
   beforeEach(() => {
-    pipe = new DateAsyncFormatPipePipe();
+    pipe = new DateAsyncFormatPipe();
+
+    fixture = TestBed.configureTestingModule({
+      declarations: [
+        TestComponent
+      ],
+      imports: [ DateAsyncFormatModule]
+    })
+      .createComponent(TestComponent);
+
+    fixture.detectChanges();
+
+    testComponent = fixture.componentInstance;
+    de = fixture.debugElement.query(By.css('div'));
+    ne = de.nativeElement;
   });
 
   it('create an instance', () => {
@@ -37,7 +67,7 @@ describe('DateAsyncFormatPipePipe', () => {
       expect(pipe.transform(testDate, formatSubject)).toBe('');
 
       formatSubject.subscribe((df: string) => {
-        expect(pipe.transform(testDate, formatSubject))
+        expect(pipe.transform(testDate, formatSubject));
       }, null, done);
 
       formatSubject.next(format);
@@ -52,7 +82,7 @@ describe('DateAsyncFormatPipePipe', () => {
       expect(pipe.transform(testDate, formatSubject)).toBe('');
 
       formatSubject.subscribe((df: string) => {
-        expect(pipe.transform(testDate, formatSubject))
+        expect(pipe.transform(testDate, formatSubject));
       }, null, done);
 
       formatSubject.next(format1);
@@ -75,6 +105,17 @@ describe('DateAsyncFormatPipePipe', () => {
       expect(() => {
         pipe.transform(testDate, undefined);
       }).toThrow();
+    });
+  });
+
+  describe('component', () => {
+    it('should format date', () => {
+      const df = 'YYYY-MM-DD HH:mm:ss A';
+      const date = new Date();
+
+      testComponent.dateFormat$.next(df);
+      fixture.detectChanges();
+      expect(ne.textContent).toBe(moment(date).format(df));
     });
   });
 });

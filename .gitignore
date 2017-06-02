@@ -7,6 +7,7 @@
 
 # dependencies
 /node_modules
+/src/node_modules
 
 # IDEs and editors
 /.idea
@@ -40,3 +41,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# ngc
+src/**/*.ngfactory.ts
+src/**/*.ngsummary.json
