@@ -6,6 +6,20 @@ E.g. this can be helpful when using [ng2-translate](https://www.npmjs.com/packag
 Date is formated with [moment.js](http://momentjs.com)
 
 ## How to use
+### Module import
+```ts
+import { DateAsyncFormatModule } from "date-async-format-pipe";
+
+@NgModule({
+    imports: [
+        DateAsyncFormatModule
+    ]
+})
+export class SomeModule {
+}
+```
+
+### template
 `date | dateFormatAsync : format`
 
 ### Where
